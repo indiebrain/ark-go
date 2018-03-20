@@ -3,12 +3,11 @@
 package cli
 
 import (
+	"../conditions"
+	"../configuration"
 	"flag"
+	"fmt"
 )
-
-type Configuration struct {
-	AirportCode string
-}
 
 var airportCodeArgument string
 
@@ -16,8 +15,17 @@ func init() {
 	flag.StringVar(&airportCodeArgument, "airport-code", "", "the four letter ICAO airport code")
 }
 
-// Creates the configuration object used by the internals of ark from the supplied command line arguments
-func ParseInput()(Configuration) {
+// Creates the configuration object used by the internals of ark from
+// the supplied command line arguments
+func ParseInput()(configuration.Configuration) {
 	flag.Parse()
-	return Configuration{ AirportCode: airportCodeArgument }
+	return configuration.Configuration{ AirportCode: airportCodeArgument }
+}
+
+// Creates a textual report of the supplied conditions
+func FormatConditions(conditions conditions.Conditions)(string) {
+	return fmt.Sprintf(
+		"Weather Conditions:\n\tLocation: %s\n\tTemperature: %s",
+		conditions.Location,
+		conditions.Temperature)
 }
