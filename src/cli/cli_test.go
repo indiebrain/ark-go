@@ -1,21 +1,19 @@
 package cli
 
 import(
-	"../../src/cli"
-	"../../src/conditions"
+	"../conditions"
 	"bytes"
 	"os"
 	"fmt"
 	"testing"
 )
 
-
 const AirportCode = "KPTW"
 
 func TestParseInput(t *testing.T) {
 	os.Args = []string{ "ark", airportCodeFlag(AirportCode) }
 
-	configuration := cli.ParseInput()
+	configuration := ParseInput()
 
 	if(configuration.AirportCode != AirportCode) {
 		t.Errorf(
@@ -35,7 +33,7 @@ func TestFormatConditions(t *testing.T) {
 		conditions.Location,
 		conditions.Temperature)
 
-	actual := cli.FormatConditions(conditions)
+	actual := FormatConditions(conditions)
 
 	if(expected != actual) {
 		t.Errorf(
