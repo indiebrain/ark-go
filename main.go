@@ -18,8 +18,8 @@
 package main
 
 import (
-	"../cli"
-	"../noaa"
+	"github.com/indiebrain/ark-go/cli"
+	"github.com/indiebrain/ark-go/noaa"
 )
 
 func main() {

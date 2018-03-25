@@ -3,7 +3,7 @@
 package cli
 
 import (
-	"../noaa"
+	"github.com/indiebrain/ark-go/noaa"
 	"flag"
 	"fmt"
 )

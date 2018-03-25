@@ -1,7 +1,7 @@
 package cli
 
 import(
-	"../noaa"
+	"github.com/indiebrain/ark-go/noaa"
 	"bytes"
 	"os"
 	"fmt"
