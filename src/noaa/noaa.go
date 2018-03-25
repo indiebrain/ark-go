@@ -1,8 +1,6 @@
 package noaa
 
 import(
-	"../conditions"
-	"../configuration"
 	"bytes"
 	"encoding/xml"
 	"fmt"
@@ -20,7 +18,7 @@ type Observation struct {
 
 const NOAA_API_BASE_URL = "http://w1.weather.gov/xml/current_obs/"
 
-func Fetch(url string)(conditions.Conditions) {
+func Fetch(url string)(Observation) {
 	response, error := http.Get(url)
 	if error != nil {
 		fmt.Fprintf(os.Stderr, "Failed to Fetch '%s': %s", url, error)
@@ -30,15 +28,15 @@ func Fetch(url string)(conditions.Conditions) {
 
 	observation := decode(response)
 
-	return conditions.Conditions{
+	return Observation{
 		Location: observation.Location,
 		Temperature: observation.Temperature}
 }
 
-func URL(configuration configuration.Configuration)(string) {
+func URL(airportCode string)(string) {
 	var buffer bytes.Buffer
 	buffer.WriteString(NOAA_API_BASE_URL)
-	buffer.WriteString(configuration.AirportCode)
+	buffer.WriteString(airportCode)
 	buffer.WriteString(".xml")
 
 	return buffer.String()

@@ -1,7 +1,7 @@
 package cli
 
 import(
-	"../conditions"
+	"../noaa"
 	"bytes"
 	"os"
 	"fmt"
@@ -23,21 +23,21 @@ func TestParseInput(t *testing.T) {
 	}
 }
 
-func TestFormatConditions(t *testing.T) {
-	conditions := conditions.Conditions{
+func TestFormatObservation(t *testing.T) {
+	observation := noaa.Observation{
 		Location: "Location",
 		Temperature: "Temperature",
 	}
 	expected := fmt.Sprintf(
 		"Weather Conditions:\n\tLocation: %s\n\tTemperature: %s",
-		conditions.Location,
-		conditions.Temperature)
+		observation.Location,
+		observation.Temperature)
 
-	actual := FormatConditions(conditions)
+	actual := FormatObservation(observation)
 
 	if(expected != actual) {
 		t.Errorf(
-			"Failed to print conditions: expccted \n'%s'\n but got\n'%s'",
+			"Failed to FormatObservation: expccted \n'%s'\n but got\n'%s'",
 			expected,
 			actual)
 	}

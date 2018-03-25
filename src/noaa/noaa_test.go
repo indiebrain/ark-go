@@ -1,8 +1,6 @@
 package noaa
 
 import (
-	"../conditions"
-	"../configuration"
 	"net/http/httptest"
 	"net/http"
 	"fmt"
@@ -10,10 +8,9 @@ import (
 )
 
 func TestURL(t *testing.T) {
-	configuration := configuration.Configuration{ AirportCode: "AIRPORT_CODE" }
 	expectedURL := "http://w1.weather.gov/xml/current_obs/AIRPORT_CODE.xml"
 
-	url := URL(configuration)
+	url := URL("AIRPORT_CODE")
 
 	if(expectedURL != url) {
 		t.Errorf(
@@ -26,16 +23,16 @@ func TestURL(t *testing.T) {
 func TestFetch(t *testing.T) {
 	server := mockServer()
 	defer server.Close()
-	expectedConditions := conditions.Conditions{
+	expectedObservation := Observation{
 		Location: "Pottstown, Pottstown Limerick Airport, PA",
 		Temperature: "30.0 F (-1.1 C)"}
-	conditions := Fetch(server.URL)
+	observation := Fetch(server.URL)
 
-	if(conditions != expectedConditions) {
+	if(observation != expectedObservation) {
 		t.Errorf(
 			"Failed to Fetch:\nexpected:\t'%s'\nbut got:\t'%s'",
-			expectedConditions,
-			conditions)
+			expectedObservation,
+			observation)
 	}
 }
 
