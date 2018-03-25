@@ -32,3 +32,7 @@ func FormatObservation(observation noaa.Observation)(string) {
 		observation.Location,
 		observation.Temperature)
 }
+
+func PrintObservation(observation noaa.Observation) {
+	fmt.Println(FormatObservation(observation))
+}
