@@ -1,7 +1,6 @@
-package cli
+package main
 
 import(
-	"github.com/indiebrain/ark-go/noaa"
 	"bytes"
 	"os"
 	"fmt"
@@ -24,20 +23,22 @@ func TestParseInput(t *testing.T) {
 }
 
 func TestFormatObservation(t *testing.T) {
-	observation := noaa.Observation{
+	observation := Observation{
 		Location: "Location",
 		Temperature: "Temperature",
-	}
-	expected := fmt.Sprintf(
-		"Weather Conditions:\n\tLocation: %s\n\tTemperature: %s",
+		Weather: "Weather",
+		ObservedAt: "ObservedAt"}
+	expected := fmt.Sprintf("Conditions at %s:\n\tWeather: %s\n\tTemperature: %s\n\tLast Observation: %s\n",
 		observation.Location,
-		observation.Temperature)
+		observation.Weather,
+		observation.Temperature,
+		observation.ObservedAt)
 
 	actual := FormatObservation(observation)
 
 	if(expected != actual) {
 		t.Errorf(
-			"Failed to FormatObservation: expccted \n'%s'\n but got\n'%s'",
+			"Failed to FormatObservation: expected \n'%s'\n but got\n'%s'",
 			expected,
 			actual)
 	}

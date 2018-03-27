@@ -1,4 +1,4 @@
-package noaa
+package main
 
 import (
 	"net/http/httptest"
@@ -20,13 +20,17 @@ func TestURL(t *testing.T) {
 	}
 }
 
-func TestFetch(t *testing.T) {
+func TestParseObservation(t *testing.T) {
 	server := mockServer()
 	defer server.Close()
 	expectedObservation := Observation{
 		Location: "Pottstown, Pottstown Limerick Airport, PA",
-		Temperature: "30.0 F (-1.1 C)"}
-	observation := Fetch(server.URL)
+		Temperature: "30.0 F (-1.1 C)",
+		Weather: "Light Snow",
+		ObservedAt: "Last Updated on Mar 20 2018, 1:54 pm EDT"}
+	response, _ := http.Get(server.URL)
+
+	observation := ParseObservation(response)
 
 	if(observation != expectedObservation) {
 		t.Errorf(
